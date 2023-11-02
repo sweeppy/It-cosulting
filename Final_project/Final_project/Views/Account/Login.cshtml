@@ -1,0 +1,40 @@
+﻿@model Final_project.Authorization.UserLogin
+
+@{
+    ViewData["Title"] = "Sign in";
+}
+<body class="body-login">
+    <div class="login-all">
+        <div class="main-login-container login-bg">
+            <div class="col-md-6 col-md-offset-3 well">
+                <h3 class="text-center sign-text">Sign in</h3>
+
+                <form asp-action="Login" asp-antiforgery="true">
+
+                    <div asp-validation-summary="ModelOnly" class="text-dandger" style="float: left;"></div>
+
+                    <input type="hidden" asp-for="ReturnUrl" />
+
+                    <div class="login-form">
+                        <div class="form-group">
+                            <input asp-for="LoginProp" class="form-control" placeholder="Write your login" />
+                                    <span asp-validation-for="LoginProp" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="login-form">
+                        <div class="form-group">
+                            <input asp-for="Password" class="form-control" placeholder="Write your password" />
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="button-auth btn btn-primary btn-xl btn-login" style="vertical-align:middle"><span>Sign in </span></button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
