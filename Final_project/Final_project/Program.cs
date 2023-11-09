@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Final_project.Controllers;
 using Final_project.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,10 +17,17 @@ builder.Services.AddControllersWithViews();
 
 string userConnection = builder.Configuration.GetConnectionString("UsersConnection");
 string adminOptionsConnection = builder.Configuration.GetConnectionString("AdminOptionsConnection");
+string applicationsConnection = builder.Configuration.GetConnectionString("ApplicationsConnection");
+
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
 
 builder.Services.AddScoped<IGetAdminOptionsInfoFromDBAsync, GetInfoFromDBApi>();
 
 builder.Services.AddHttpClient<AccountController>();
+builder.Services.AddHttpClient<HomeController>();
 
 builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<UserContext>()
@@ -57,7 +65,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddDbContext<UserContext>(options => options.UseSqlServer(userConnection));
-builder.Services.AddDbContext<MssqladminOptionsDbContext>(options => options.UseSqlServer(userConnection));
+builder.Services.AddDbContext<MssqladminOptionsDbContext>(options => options.UseSqlServer(adminOptionsConnection));
+builder.Services.AddDbContext<ApplicationsDbContext>(options => options.UseSqlServer(applicationsConnection));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

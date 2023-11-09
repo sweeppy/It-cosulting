@@ -19,6 +19,12 @@ namespace Final_project.Controllers
             _userManager = UM;
             _httpClient = httpClient;
         }
+        /// <summary>
+        /// Receives a link where the user came from
+        /// and adds it to the model
+        /// </summary>
+        /// <param name="returnUrl"></param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Login(string returnUrl)
         {
@@ -31,6 +37,11 @@ namespace Final_project.Controllers
 
             return View(model);
         }
+        /// <summary>
+        /// The prosses of login
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(UserLogin model)
         {

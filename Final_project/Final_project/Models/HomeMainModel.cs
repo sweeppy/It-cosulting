@@ -10,5 +10,7 @@ namespace Final_project.Models
         public List<HeaderSection> HeaderSection { get; set; }
         public List<ProjectsSection> ProjectsSection { get; set; }
         public List<ServicesSection> ServicesSection { get; set; }
+
+        public Application ApplicationModel { get; set; }
     }
 }

@@ -17,9 +17,29 @@
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
-    </head>
-    <body id="page-top">
+    <link href="css/styles.css" rel="stylesheet" />
+    <link href="css/site.css" rel="stylesheet" />
+</head>
+<body id="page-top">
+    <!--Success alert-->
+    <div id="alertContainer" class="">
+        @if (TempData.ContainsKey("SuccessMessage"))
+        {
+            <div class="alert alert-success fade-in" id="successAlert">
+                @TempData["SuccessMessage"]
+            </div>
+        }
+    </div>
+
+
+    <!--Error alert-->
+    <div id="alertContainer" class="alert-container">
+        @if (TempData.ContainsKey("ErrorMessage"))
+        {
+            <div class="alert alert-danger alert-error fade-in" id="errorAlert" style="white-space: pre-line;">@TempData["ErrorMessage"]</div>
+        }
+    </div>
+
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
             <div class="container">
@@ -40,7 +60,7 @@
                             <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#contacts">Contact us</a></li>
                         @if(!User.Identity.IsAuthenticated)
                         {
-                            <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded sign-in-main" href="/Account/Login">Sign in</a></li>
+                            <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded sign-in-main" href="/Account/Login">Log in</a></li>
                     }
                         else
                         {
@@ -164,32 +184,36 @@
                 <!-- Icon Divider-->
                 <div class="divider-custom">
                     <div class="divider-custom-line"></div>
-                    <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
-                    <div class="divider-custom-line"></div>
-                </div>
-                <!-- Contact Section Form-->
-                <div class="row justify-content-center">
-                    <div class="col-lg-8 col-xl-7">
-                        <form>
-                            <!-- Name input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
-                                <label for="name">Full name</label>
-                            </div>
-                            <!-- Email address input-->
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="email" type="email" placeholder="name@example.com"/>
-                                <label for="email">Email address</label>
-                            </div>
-                            <!-- Message input-->
-                            <div class="form-floating mb-3">
-                                <textarea class="form-control" id="message" type="text" placeholder="Enter your message here..." style="height: 10rem" data-sb-validations="required"></textarea>
-                                <label for="message">Message</label>
-                            </div>
-                            <!-- Submit Button-->
-                            <button class="btn btn-primary btn-xl" type="submit">Send</button>
-                        </form>
-                    </div>
+                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                <div class="divider-custom-line"></div>
+            </div>
+            <!-- Contact Section Form-->
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-xl-7">
+                    <form action="@Url.Action("SendMessage")" method="post">
+                        @Html.AntiForgeryToken()
+
+                        <!-- Name input-->
+                        <div class="form-floating mb-3">
+                            <input class="form-control" name="FullName" placeholder="Enter your name..." />
+                            <label for="name">Full name</label>
+                        </div>
+
+                        <!-- Email address input-->
+                        <div class="form-floating mb-3">
+                            <input class="form-control" name="Email" placeholder="name@example.com" />
+                            <label for="email">Email address</label>
+                        </div>
+
+                        <!-- Message input-->
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" name="Message" placeholder="Enter your message here..." style="height: 10rem"></textarea>
+                            <label for="message">Message</label>
+                        </div>
+
+                        <!-- Submit Button-->
+                        <button class="btn btn-primary btn-xl" type="submit">Send</button>
+                    </form>
                 </div>
             </div>
         </section>
